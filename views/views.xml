@@ -1,0 +1,110 @@
+<odoo>
+  <data>
+    <!--Vista de Configuracion integradora-->
+    <record model="ir.ui.view" id="integradora_bex.maestra_list_view">
+      <field name="name">integradora_bex.maestra_integradora.view.tree</field>
+      <field name="model">integradora_bex.maestra_integradora</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="wms_bd_principal"/>
+          <field name="wms_tipo_integracion"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Vista de Configuracion consultas ws-->
+    <record model="ir.ui.view" id="integradora_bex.consultas_list_view">
+      <field name="name">integradora_bex.consultas_webservices.view.tree</field>
+      <field name="model">integradora_bex.consultas_webservices</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="erp_integracion"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Vista de Creacion ERP-->
+    <record model="ir.ui.view" id="integradora_bex.maestra_erp_list_view">
+      <field name="name">integradora_bex.maestra_erp.view.tree</field>
+      <field name="model">integradora_bex.maestra_erp</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="description"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Formulario configuracion integracion -->
+    <record model="ir.ui.view" id="integradora_bex.maestra_form_view">
+      <field name="name">integradora_bex.maestra_integradora.view.form</field>
+      <field name="model">integradora_bex.maestra_integradora</field>
+      <field name="arch" type="xml">
+        <form string="Formulario de parametrizacion">
+          <sheet>
+            <div class="oe_title">
+              <label class="oe_edit_only" for="name" string="Nombre cliente"/>
+              <h1>
+                <field name="name" placeholder="Nombre cliente"/>
+              </h1>
+            </div>
+            <group>
+              <separator string="Informacion RPC" colspan="2"/>
+              <field name="wms_endpoint_api"/>
+              <field name="wms_bd_principal"/>
+              <field name="wms_endpoint_rpc"/>
+              <field name="wms_username_rpc"/>
+              <field name="wms_token_rpc"/>
+              <field name="wms_tipo_integracion"/>
+            </group>
+            <group attrs="{'invisible': [('wms_tipo_integracion', '!=', 'PL')]}">
+              <separator string="Integracion planos" colspan="2"/>
+              <field name="ruta_archivos"/>
+              <field name="importar_plano" filename="nombre_archivo"/>
+              <field name="nombre_archivo" invisible="1"/>
+            </group>
+            <group attrs="{'invisible': [('wms_tipo_integracion', '!=', 'WS')]}">
+              <separator string="Integracion Web services" colspan="2"/>
+              <field name="ws_endpoint"/>
+              <field name="ws_proxy_host"/>
+              <field name="ws_proxy_port"/>
+              <field name="ws_conexion"/>
+              <field name="ws_compania"/>
+              <field name="ws_proveedor"/>
+              <field name="ws_username"/>
+              <field name="ws_clave"/>
+              <field name="ws_consultas_id" widget="many2many_consultas"/>
+            </group>
+            <group attrs="{'invisible': [('wms_tipo_integracion', '!=', 'API')]}">
+              <separator string="Integracion API" colspan="2"/>
+              <field name="api_endpoint"/>
+              <field name="api_username"/>
+              <field name="api_token"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- Top menu item -->
+    <record model="ir.actions.act_window" id="integradora_bex.maestra_integradora_action_window">
+      <field name="name">Maestra Integradora</field>
+      <field name="res_model">integradora_bex.maestra_integradora</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="integradora_bex.consultas_ws_action_window">
+      <field name="name">Consultas Web services</field>
+      <field name="res_model">integradora_bex.consultas_webservices</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Integradora BEX" id="integradora_bex.menu_root" web_icon="integradora_bex,static/description/icon.png"/>
+
+    <menuitem name="Maestra RPC" id="integradora_bex.conf_maestra_menu" parent="integradora_bex.menu_root" action="integradora_bex.maestra_integradora_action_window"/>
+    <menuitem name="Configuracion Consultas" id="integradora_bex.conf_consulta_menu" parent="integradora_bex.menu_root" action="integradora_bex.consultas_ws_action_window"/>
+  </data>
+</odoo>

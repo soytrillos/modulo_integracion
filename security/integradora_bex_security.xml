@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="integradora_bex.module_category_integradora_bex">
+            <field name="name">Integradora</field>
+            <field name="description">Ayuda a gestinar integraciones</field>
+            <field name="sequence">100</field>
+        </record>
+
+        <record model="res.groups" id="group_integradora_bex_usuario">
+            <field name="name">Usuario</field>
+            <field name="category_id" ref="integradora_bex.module_category_integradora_bex" />
+            <field name="comment">Usuarios que gestionan integraciones</field>
+        </record>
+
+        <record model="res.groups" id="group_integradora_bex_director">
+            <field name="name">Director</field>
+            <field name="category_id" ref="integradora_bex.module_category_integradora_bex" />
+            <field name="comment">Usuarios administrativos</field>
+            <field name="implied_ids" eval="[(4, ref('group_integradora_bex_usuario'))]" />
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]" />
+        </record>
+    </data>
+</odoo>
